@@ -34,6 +34,95 @@
         .logo-backs2 {
             display: none !important;
         }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            /* Gradient background */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 3em;
+            text-align: center;
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            /* Shadow for depth */
+            transition: transform 0.3s ease;
+            /* Smooth scaling */
+
+            z-index: 1000000000000;
+        }
+
+        .overlay:hover {
+            transform: scale(1.05);
+            /* Scale effect on hover */
+        }
+
+        .greeting,
+        .greeting-vn {
+            margin-bottom: 10px;
+            /* Space between greetings */
+            animation: fadeIn 1s ease;
+            /* Fade-in animation */
+        }
+
+        .greeting-vn {
+            font-size: 2.5em;
+            /* Smaller size for Vietnamese text */
+        }
+
+        .instruction {
+            font-size: 1.5em;
+            /* Smaller size for instruction */
+            animation: fadeIn 1s ease;
+            /* Fade-in animation */
+            animation-delay: 0.5s;
+            /* Delay for instruction */
+        }
+
+        /* Fade-in animation */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+                /* Slide up effect */
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .greeting {
+                font-size: 1em;
+                /* Reduce size on smaller screens */
+            }
+
+            .instruction {
+                font-size: 1em;
+                /* Adjust instruction size */
+            }
+        }
+
+        @media (max-width: 480px) {
+            .greeting {
+                font-size: 0.6em;
+                /* Further reduce size on mobile */
+            }
+
+            .instruction {
+                font-size: 0.5em;
+                /* Further adjust instruction size */
+            }
+        }
     </style>
 
     <script type="text/javascript" src="https://cdnc.heyzine.com/flipbook/js/site/jquery-3.5.1.min.js?v2"></script>
@@ -127,11 +216,37 @@
     </script>
 
 
+
+
 </head>
 
 <body style="width: 100vw; height: 100vh">
 
+    <script>
+        setTimeout(() => {
+            const audioOff = document.getElementById('btnSoundOff');
+            const overlay = document.getElementById('overlay');
+            const audio = document.getElementById('background-music');
 
+            overlay.addEventListener('click', () => {
+                overlay.style.display = 'none';
+                audio.play();
+            });
+
+            audioOff.addEventListener('click', () => {
+                if (audioOff.className.includes('hz-icn-sound-on')) {
+                    audio.play();
+                } else {
+                    audio.pause();
+                }
+            });
+        }, 100)
+    </script>
+
+    <div id="overlay" class="overlay">
+        <div class="greeting" style="margin-bottom: 64px;">🎄 Merry Christmas! 🎄</div>
+        <div class="instruction">Tap to see the menu</div>
+    </div>
 
 
     <div id="loaderLine" class="loader-line" style="display: none;"></div>
@@ -213,6 +328,10 @@
 
         </div>
 
+        <audio id="background-music" autoplay loop>
+            <source src="./santa-baby.mp3" type="audio/mpeg">
+            Your browser does not support the audio element.
+        </audio>
 
 
         <div id="pnlZoomStep" class="controls-pdf controls-zoom-step hz-iconset-2 controls-md"
