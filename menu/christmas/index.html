@@ -234,11 +234,13 @@
             });
 
             audioOff.addEventListener('click', () => {
-                if (audioOff.className.includes('hz-icn-sound-on')) {
-                    audio.play();
-                } else {
-                    audio.pause();
-                }
+                setTimeout(() => {
+                    if (audioOff.className.includes('hz-icn-sound-off')) {
+                        audio.pause();
+                    } else {
+                        audio.play();
+                    }
+                }, 100)
             });
         }, 100)
     </script>
